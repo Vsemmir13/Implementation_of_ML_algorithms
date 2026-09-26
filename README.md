@@ -1,62 +1,74 @@
-# Implementation_of_ML_algorithms
+# Machine Learning Algorithms from Scratch
 
-  Один из самых эффективных способов разобраться как работает тот или иной алгоритм - реализовать его самому.
+Educational implementations of classical machine-learning algorithms using
+NumPy and pandas for the model logic. Each algorithm is developed and explained
+in a Jupyter notebook, then evaluated on a small public or synthetic dataset.
 
-  Задача: реализовать основные алгоритмы классического машинного обучения на Python, используя только Pandas и NumPy.
+The repository focuses on understanding the mechanics of optimization,
+distance metrics, regularization, and prediction rather than replacing
+production libraries such as scikit-learn.
 
-  Обозреваемые алгоритмы:
-  1. Линейный модели:
-  - Линейная регрессия (Linear Regression)
-  - Логистическая регрессия (Logistic Regression) 
-  - Метод опорных векторов (Support Vector Machine, SVM)
-    
-  2. Метрические алгоритмы:
-  - Метод k-ближайших соседей (k-nearest neighbors algorithm, k-NN)
-    
-  3. Деревья решений (Decision Trees)
-  
-  4. Ансамбли:
-  - Бэггинг (Bagging)
-  - Случайный лес (Random Forest)
-  - Бустинг над деревьями решений (Boosting)
-    
-  5. Кластеризация:
-  - Метод k-средних (K-means)
-  - Агломеративная кластеризация (Agglomerative Clustering)
-  - DBSCAN
-    
-  6. Понижение размерности:
-  - Метод главных компонент (Principal Component Analysis, PCA)
-    
-Помимо этого рассмотрены такие функции как:
-- Функции потерь для классификации и регрессии
-- Метрики качества для классификации и регрессии
-- Различные регуляризации
-- Стохастический градиентный спуск
+## Implemented algorithms
 
-Датасеты:
-- Для регрессии
-```python   
-from sklearn.datasets import make_regression
-X, y = make_regression(n_samples=1000, n_features=14, n_informative=10, noise=15, random_state=42)
-X = pd.DataFrame(X)
-y = pd.Series(y)
-X.columns = [f'col_{col}' for col in X.columns]
+| Algorithm | Notebook | Highlights |
+| --- | --- | --- |
+| Linear regression | `Linear_models/Linear_regression.ipynb` | Batch or stochastic gradient descent, configurable learning rate, L1/L2/Elastic Net regularization, and MAE/MSE/RMSE/MAPE/R2 metrics. |
+| k-NN classification | `Metric_algorithms/KNN_classification.ipynb` | Binary classification, probability estimates, four distance metrics, and uniform/rank/distance weighting. |
+| k-NN regression | `Metric_algorithms/KNN_regression.ipynb` | Regression with uniform, rank-based, or inverse-distance weighting. |
+
+Supported k-NN distances:
+
+- Euclidean;
+- Manhattan;
+- Chebyshev;
+- cosine distance.
+
+## Datasets
+
+- linear regression: a synthetic regression dataset generated with
+  `sklearn.datasets.make_regression`;
+- k-NN classification: the UCI Banknote Authentication dataset included as
+  `data_banknote_authentication.txt`;
+- k-NN regression: the scikit-learn diabetes dataset.
+
+scikit-learn is used only to load/split demonstration datasets; the model
+implementations themselves use NumPy and pandas.
+
+## Quick start
+
+Create an environment and install the notebook dependencies:
+
+```bash
+python -m venv .venv
+source .venv/bin/activate
+python -m pip install jupyter numpy pandas scikit-learn
+jupyter lab
 ```
-- Для классификации - Banknote Authentication
-  
-https://archive.ics.uci.edu/static/public/267/banknote+authentication.zip
 
-```python 
-df = pd.read_csv('banknote+authentication.zip', header=None)
-df.columns = ['variance', 'skewness', 'curtosis', 'entropy', 'target']
-X, y = df.iloc[:,:4], df['target']
+Open any notebook and run its cells from top to bottom. The notebooks contain
+the implementation, explanation, and a compact experiment in one place.
+
+## Repository structure
+
+```text
+.
+├── Linear_models/
+│   └── Linear_regression.ipynb
+├── Metric_algorithms/
+│   ├── KNN_classification.ipynb
+│   └── KNN_regression.ipynb
+└── data_banknote_authentication.txt
 ```
-- Для регрессии - Diabetes
-  
-https://scikit-learn.org/stable/modules/generated/sklearn.datasets.load_diabetes.html#sklearn.datasets.load_diabetes
-```python 
-from sklearn.datasets import load_diabetes
-data = load_diabetes(as_frame=True)
-X, y = data['data'], data['target']
-```
+
+## Scope and limitations
+
+This is a learning repository, not a drop-in estimator package. The notebooks
+prioritize readable implementations and expose intermediate calculations. They
+do not yet provide a shared package API, automated tests, or performance
+optimizations for large datasets.
+
+## Roadmap
+
+Natural extensions include decision trees, ensemble methods, clustering, and
+dimensionality reduction. These are roadmap items and are not claimed as
+implemented in the current repository.
